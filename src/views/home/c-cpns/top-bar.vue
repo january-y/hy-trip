@@ -1,6 +1,6 @@
 <template>
   <div class="top-bar">
-    <span>宏源旅途</span>
+    <span>弘源旅途</span>
   </div>
 </template>
 
@@ -15,8 +15,9 @@
   border-bottom: 1px solid #f2f2f2;
   span {
     color: var(--primary-color);
-    font-size: 4.8vw;
-    font-weight: 600;
+    font-size: 4.26667vw;
+    font-weight: 700;
+    line-height: 1.2;
   }
 }
 </style>

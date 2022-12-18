@@ -20,6 +20,7 @@ import { onBeforeMount } from 'vue'
 const cityStore = useCitysStore()
 onBeforeMount(() => {
   cityStore.getAllCitysAction()
+  cityStore.getHotSuggestsAction()
 })
 </script>
 
