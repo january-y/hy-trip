@@ -6,11 +6,11 @@
 </template>
 
 <script setup lang="ts">
-import TabBar from "@/components/tab-bar/tab-bar.vue";
-import { useRoute } from "vue-router";
+import TabBar from '@/components/tab-bar/tab-bar.vue'
+import { useRoute } from 'vue-router'
 
 // 隐藏tabbar方法一，meta里添加信息
-const route = useRoute();
+const route = useRoute()
 </script>
 
 <style lang="less" scoped></style>

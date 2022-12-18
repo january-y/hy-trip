@@ -1,19 +1,31 @@
 <template>
   <div class="location">
+    <!-- title -->
     <div class="city" @click="handleCityClick">
-      <span>广州</span>
+      <span>{{ currentCity?.cityName }}</span>
     </div>
+    <!-- 位置信息 -->
     <div class="position" @click="handleGetLocation">
       <span>我的位置</span>
       <img src="@/assets/img/home/icon_location.png" alt="" />
+    </div>
+    <!-- 日期 -->
+    <div class="date">
+      <div class="start"></div>
+      <div class="stay"></div>
+      <div class="end"></div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
+import useCitysStore from '@/stores/modules/city'
+import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 
-const router = useRouter();
+const router = useRouter()
+const cityStore = useCitysStore()
+const { currentCity } = storeToRefs(cityStore)
 const handleGetLocation = () => {
   // navigator.geolocation.getCurrentPosition(
   //   (success) => {
@@ -29,11 +41,11 @@ const handleGetLocation = () => {
   //     maximumAge: 24 * 60 * 60 * 1000, //位置缓存时间,以ms为单位
   //   }
   // );
-};
+}
 
 const handleCityClick = () => {
-  router.push("/city");
-};
+  router.push('/city')
+}
 </script>
 
 <style lang="less" scoped>

@@ -1,18 +1,20 @@
 import { defineStore } from 'pinia'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { getCityAll } from '@/service/modules/getCityAll'
 
 const useCitysStore = defineStore(
   'city',
   () => {
     let allCitys = reactive<any>({})
+    let currentCity = ref<any>({ cityName: '广州' })
 
-    const getAllCitysAction = async () => {
-      const res = await getCityAll()
-      allCitys = res.data
+    const getAllCitysAction = () => {
+      getCityAll().then((res) => {
+        allCitys = res.data
+      })
     }
 
-    return { allCitys, getAllCitysAction }
+    return { allCitys, currentCity, getAllCitysAction }
   },
   {
     persist: true,

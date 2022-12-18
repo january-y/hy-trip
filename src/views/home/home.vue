@@ -12,8 +12,15 @@
 </template>
 
 <script setup lang="ts">
-import topBar from "./c-cpns/top-bar.vue";
-import searchBox from "./c-cpns/search-box.vue";
+import topBar from './c-cpns/top-bar.vue'
+import searchBox from './c-cpns/search-box.vue'
+import useCitysStore from '@/stores/modules/city'
+import { onBeforeMount } from 'vue'
+
+const cityStore = useCitysStore()
+onBeforeMount(() => {
+  cityStore.getAllCitysAction()
+})
 </script>
 
 <style lang="less" scoped>
