@@ -4,6 +4,7 @@
   --font-color-first: #333333;
   --font-color-second: #999999;
   --line-color: #f7f7f7;
+  --theme-linear-gradient: linear-gradient(90deg, #fa8c1d, #fcaf3f);
 }
 body {
   font-size: 3.7333vw;

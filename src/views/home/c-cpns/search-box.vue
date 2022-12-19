@@ -45,15 +45,19 @@
         <span>{{ item?.tagText.text }}</span>
       </template>
     </div>
+    <!-- 开始搜索 -->
+    <div class="start-search" @click="handleSearchClick">
+      <span>开始搜索</span>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import useCitysStore from '@/stores/modules/city'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { formatMonDayToday, formatMonDayTomorrow, getTotalDays } from '@/utils/format-date'
-import { ref } from 'vue'
 
 // city
 const router = useRouter()
@@ -94,6 +98,18 @@ const onConfirm = (date: any) => {
   endtDate.value = end
   totalDay.value = getTotalDays(date[0], date[1])
   showSelect.value = false
+}
+
+// 跳转search
+const handleSearchClick = () => {
+  router.push({
+    path: '/search',
+    query: {
+      startDate: startDate.value,
+      endtDate: endtDate.value,
+      currentCity: currentCity.value.cityName,
+    },
+  })
 }
 </script>
 
@@ -142,6 +158,7 @@ const onConfirm = (date: any) => {
       .time {
         margin-top: 5px;
         color: var(--font-color-first);
+        font-size: 15px;
       }
     }
     .stay {
@@ -158,6 +175,7 @@ const onConfirm = (date: any) => {
       .time {
         margin-top: 5px;
         color: var(--font-color-first);
+        font-size: 15px;
       }
     }
   }
@@ -188,6 +206,7 @@ const onConfirm = (date: any) => {
     flex-wrap: wrap;
     padding: 3.3333vw 3.6667vw;
     margin-top: -5px;
+    margin-left: 1px;
     span {
       background-color: #f1f3f5;
       margin: 3px;
@@ -195,6 +214,23 @@ const onConfirm = (date: any) => {
       border-radius: 25px;
       font-size: 12px;
       text-align: center;
+    }
+  }
+  .start-search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 340px;
+    background-color: gray;
+    border-radius: 5.33333vw;
+    padding: 9px 2px;
+    padding-left: 0;
+    margin: 2px auto;
+    background-image: var(--theme-linear-gradient);
+    span {
+      font-weight: 500;
+      font-size: 4.8vw;
+      color: #f1f3f5;
     }
   }
 }
