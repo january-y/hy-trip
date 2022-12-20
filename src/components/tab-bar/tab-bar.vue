@@ -6,11 +6,7 @@
           <span>{{ item.text }}</span>
           <template #icon>
             <img
-              :src="
-                getAssetsImg(
-                  index === currentIndex ? item.imageActive : item.image
-                )
-              "
+              :src="getAssetsImg(index === currentIndex ? item.imageActive : item.image)"
               alt=""
             />
           </template>
@@ -36,15 +32,22 @@
 </template>
 
 <script setup lang="ts">
-import tabbarData from "@/assets/data/tabbar";
-import getAssetsImg from "@/utils/getAssetsImg";
-import { ref } from "vue";
+import tabbarData from '@/assets/data/tabbar'
+import getAssetsImg from '@/utils/getAssetsImg'
+import { ref, watchEffect } from 'vue'
+import { useRoute } from 'vue-router'
 
-const currentIndex = ref<number>(0);
+const currentIndex = ref<number>(0)
 // const handleClick = (index: number, path: string) => {
 //   currentIndex.value = index;
 //   router.push(path);
 // };
+
+const route = useRoute()
+watchEffect(() => {
+  const nowPath = tabbarData.findIndex((item) => item.path === route.path)
+  if (nowPath) currentIndex.value = nowPath
+})
 </script>
 
 <style lang="less" scoped>

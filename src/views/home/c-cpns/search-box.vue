@@ -1,5 +1,7 @@
 <template>
   <div class="box">
+    <!-- home-top-search -->
+    <home-scoll-bar />
     <!-- location -->
     <div class="location">
       <!-- title -->
@@ -55,13 +57,22 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import useCitysStore from '@/stores/modules/city'
+import useMainStore from '@/stores/modules/mainStore'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { formatMonDayToday, formatMonDayTomorrow, getTotalDays } from '@/utils/format-date'
+import homeScollBar from '@/components/home-scoll-bar.vue'
+import {
+  formatMonDayToday,
+  formatMonDayTomorrow,
+  getTotalDays,
+  formatMonDayTodayV2,
+  formatMonDayTomorrowV2,
+} from '@/utils/format-date'
 
 // city
 const router = useRouter()
 const cityStore = useCitysStore()
+const mainStore = useMainStore()
 const { currentCity, hotSuggestsData } = storeToRefs(cityStore)
 
 const handleGetLocation = () => {
@@ -88,6 +99,8 @@ const nowDate = new Date()
 let startDate = ref<any>(formatMonDayToday(nowDate))
 let endtDate = ref<any>(formatMonDayTomorrow(nowDate))
 let totalDay = ref<number>(1)
+mainStore.currentDate = ref<any>(formatMonDayTodayV2(nowDate))
+mainStore.tomorrowDate = ref<any>(formatMonDayTomorrowV2(nowDate))
 
 // time
 const showSelect = ref(false)
@@ -97,6 +110,10 @@ const onConfirm = (date: any) => {
   startDate.value = start
   endtDate.value = end
   totalDay.value = getTotalDays(date[0], date[1])
+  mainStore.currentDate = formatMonDayTodayV2(date[0])
+  mainStore.tomorrowDate = formatMonDayTodayV2(date[1])
+  mainStore.originCurrentDate = date[0]
+  mainStore.originTomorrowDate = date[1]
   showSelect.value = false
 }
 

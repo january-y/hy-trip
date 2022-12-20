@@ -3,6 +3,8 @@
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
   "compilerOptions": {
     "baseUrl": ".",
+    // 配置jsx 模板使用变量有更好提示
+    "jsx": "preserve",
     "paths": {
       "@/*": ["./src/*"]
     }

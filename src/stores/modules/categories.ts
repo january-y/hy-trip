@@ -10,20 +10,20 @@ const useCategoriesStore = defineStore(
     let hotSelectData = ref<any>([])
 
     const geteCategoriesDataAction = () => {
-      getCategories().then((res) => {
+      getCategories().then((res: any) => {
         categoriesData.value = res.data.resData.data
       })
     }
 
     const getHotSelectDataAction = (page: number) => {
-      getHotSelectData(page).then((res) => {
+      getHotSelectData(page).then((res: any) => {
         hotSelectData.value = res.data.resData.data
       })
     }
 
     const loadHotSelectDataAction = (page: number) => {
-      getHotSelectData(page).then((res) => {
-        hotSelectData.value.push(...res.data.resData.data)
+      getHotSelectData(page).then((res: any) => {
+        hotSelectData.value.push(...res?.data?.resData?.data)
       })
     }
 

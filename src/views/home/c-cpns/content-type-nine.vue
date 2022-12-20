@@ -8,13 +8,12 @@
         <!-- 评分 -->
         <div class="rate">
           <van-rate
-            v-model="contentsData.data.commentScore"
+            :model-value="Number(contentsData.data.commentScore)"
             readonly
             allow-half
             :size="15"
             color="#fff"
             void-icon="star"
-            void-color="none"
           />
           <span class="price">{{ '¥' + contentsData.data.finalPrice }}</span>
         </div>
