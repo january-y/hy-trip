@@ -23,7 +23,7 @@ onMounted(() => {
     // map.setMapStyleV2({
     //   styleId: '3d71dc5a4ce6222d3396801dee06622d',
     // })
-  }, 500)
+  }, 1000)
 
   //   const map = new BMapGL.Map(mapRef.value) // 创建地图实例
   //   const point = new BMapGL.Point(116.404, 39.915) // 创建点坐标

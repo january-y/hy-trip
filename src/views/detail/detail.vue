@@ -27,11 +27,13 @@
     </detail-section>
     <!-- 价格说明 -->
     <detail-price-explain />
+    <!-- top-bar -->
+    <detail-top-bar v-if="isShowTabbar" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted, onActivated, onDeactivated } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getDetailInfos } from '@/service/modules/detail'
 import detailSwip from './c-cpns/detail-swip.vue'
@@ -43,6 +45,7 @@ import detailHouseComment from './c-cpns/detail-house-comment.vue'
 import detailHouseResever from './c-cpns/detail-house-reserver.vue'
 import detailHouseAround from './c-cpns/detail-house- around.vue'
 import detailPriceExplain from './c-cpns/detail-price-explain.vue'
+import detailTopBar from './c-cpns/detail-top-bar.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -70,6 +73,27 @@ const onClickLeft = () => {
 // axios
 getDetailInfos(Number(route.params.id)).then((res: any) => {
   detailInfos.value = res.data
+})
+
+// scoll
+const isShowTabbar = ref<boolean>(false)
+let timer: any = ''
+
+// hooks
+const scollFn = () => {
+  clearTimeout(timer)
+  timer = setTimeout(() => {
+    const scollTop = document.documentElement.scrollTop
+    if (scollTop >= 500) isShowTabbar.value = true
+    if (scollTop <= 500) isShowTabbar.value = false
+    // console.log(scollTop)
+  }, 100)
+}
+onMounted(() => {
+  window.addEventListener('scroll', scollFn)
+})
+onUnmounted(() => {
+  window.removeEventListener('scroll', scollFn)
 })
 </script>
 
