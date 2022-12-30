@@ -15,7 +15,13 @@
   </div>
 </template>
 
+<!-- <script>
+// export default {
+//   name: 'home',
+// }
+</script> -->
 <script setup lang="ts">
+import { onActivated, onDeactivated, ref } from 'vue'
 import topBar from './c-cpns/top-bar.vue'
 import searchBox from './c-cpns/search-box.vue'
 import useCitysStore from '@/stores/modules/city'
@@ -29,6 +35,19 @@ cityStore.getAllCitysAction()
 cityStore.getHotSuggestsAction()
 categoriesStore.geteCategoriesDataAction()
 categoriesStore.getHotSelectDataAction(1)
+
+// hooks
+let currentScollTop: number = 0
+onDeactivated(() => {
+  const scollTop = document.documentElement.scrollTop
+
+  currentScollTop = scollTop
+})
+onActivated(() => {
+  document.documentElement.scrollTo({
+    top: currentScollTop,
+  })
+})
 </script>
 
 <style lang="less" scoped>

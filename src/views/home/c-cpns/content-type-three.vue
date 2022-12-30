@@ -1,6 +1,11 @@
 <template>
   <div class="type-three">
-    <img :src="contentsData?.data?.image?.url" alt="" />
+    <img
+      :data-url="contentsData?.data?.image?.url"
+      alt=""
+      ref="imgRef"
+      src="@/assets/img/lazy.jpg"
+    />
     <div class="content">
       <div class="position">
         <van-icon name="location-o" />
@@ -18,9 +23,34 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
+
 const props = defineProps<{
   contentsData: any
 }>()
+
+const imgRef = ref<HTMLImageElement>()
+let timer: any = null
+
+onMounted(() => {
+  timer = setTimeout(() => {
+    clearTimeout(timer)
+    window.removeEventListener('scroll', scollFn)
+    function scollFn() {
+      const scollTop = document.documentElement.scrollTop
+      const clientHeight = document.documentElement.clientHeight
+      const elTop = imgRef.value?.offsetTop
+      // console.log(scollTop, clientHeight, elTop)
+      // console.log('--------')
+      if (elTop && scollTop + clientHeight >= elTop) {
+        setTimeout(() => {
+          if (imgRef.value) imgRef.value.src = imgRef.value?.getAttribute('data-url') as string
+        }, 1000)
+      }
+    }
+    window.addEventListener('scroll', scollFn)
+  }, 200)
+})
 </script>
 
 <style lang="less" scoped>

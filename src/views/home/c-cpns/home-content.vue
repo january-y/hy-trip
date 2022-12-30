@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="title">热门精选</div>
-    <div class="box">
+    <div class="box" v-if="hotSelectData">
       <template v-for="(item, index) in hotSelectData" :key="index">
         <content-type-nine
           @click="handleHouseId(item)"

@@ -9,6 +9,7 @@ const router = createRouter({
     },
     {
       path: '/home',
+      name: 'home',
       component: () => import('@/views/home/home.vue'),
     },
     {
@@ -18,9 +19,6 @@ const router = createRouter({
     {
       path: '/favor',
       component: () => import('@/views/favor/favor.vue'),
-      meta: {
-        hideTabbar: true,
-      },
     },
     {
       path: '/message',

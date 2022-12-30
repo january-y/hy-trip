@@ -12,7 +12,9 @@ const props = defineProps<{
   infoData?: any
 }>()
 const mapRef = ref<HTMLElement>()
+// hooks
 onMounted(() => {
+  // 百度地图
   setTimeout(() => {
     let map = new BMapGL.Map(mapRef.value)
     let point = new BMapGL.Point(props?.infoData?.longitude, props?.infoData?.latitude)

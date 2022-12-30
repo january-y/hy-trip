@@ -1,5 +1,5 @@
 <template>
-  <div class="detail">
+  <div class="detail" v-if="detailInfos">
     <van-nav-bar title="房屋详情" left-text="返回" left-arrow @click-left="onClickLeft" />
     <!-- 轮播图 -->
     <detail-swip v-if="mainPart" :img-list-data="mainPart?.topModule?.housePicture?.housePics" />
@@ -28,12 +28,12 @@
     <!-- 价格说明 -->
     <detail-price-explain />
     <!-- top-bar -->
-    <detail-top-bar v-if="isShowTabbar" />
+    <detail-top-bar v-if="isShowTabbar" :scoll-top="scollTopp" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, onActivated, onDeactivated } from 'vue'
+import { ref, computed, onMounted, onUnmounted, defineAsyncComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getDetailInfos } from '@/service/modules/detail'
 import detailSwip from './c-cpns/detail-swip.vue'
@@ -45,12 +45,26 @@ import detailHouseComment from './c-cpns/detail-house-comment.vue'
 import detailHouseResever from './c-cpns/detail-house-reserver.vue'
 import detailHouseAround from './c-cpns/detail-house- around.vue'
 import detailPriceExplain from './c-cpns/detail-price-explain.vue'
-import detailTopBar from './c-cpns/detail-top-bar.vue'
+// import detailTopBar from './c-cpns/detail-top-bar.vue'
+import useHouseListStore from '@/stores/modules/home-house'
+import { storeToRefs } from 'pinia'
 
+const detailTopBar = defineAsyncComponent(() => import('./c-cpns/detail-top-bar.vue'))
 const router = useRouter()
 const route = useRoute()
+const houseListStore = useHouseListStore()
+houseListStore.getHomeHouseListDataAction(Number(route.params.id))
+const { homeHouseList } = storeToRefs(houseListStore)
 let detailInfos = ref<any>({})
-const mainPart = computed(() => detailInfos.value.mainPart)
+// axios
+// const start = async () => {
+//   const res: any = await getDetailInfos(Number(route.params.id))
+//   detailInfos.value = res.data
+// }
+// start()
+const mainPart = computed(() => homeHouseList.value?.mainPart)
+console.log(mainPart.value)
+//
 const houseFacilitys = computed(() => {
   return mainPart.value?.dynamicModule?.facilityModule?.houseFacility
 })
@@ -71,12 +85,18 @@ const onClickLeft = () => {
 }
 
 // axios
-getDetailInfos(Number(route.params.id)).then((res: any) => {
-  detailInfos.value = res.data
-})
+// const start = async () => {
+//   const res: any = await getDetailInfos(Number(route.params.id))
+//   detailInfos.value = res.data
+// }
+// start()
+// getDetailInfos(Number(route.params.id)).then((res: any) => {
+//   detailInfos.value = res.data
+// })
 
 // scoll
 const isShowTabbar = ref<boolean>(false)
+let scollTopp = ref<any>()
 let timer: any = ''
 
 // hooks
@@ -84,13 +104,17 @@ const scollFn = () => {
   clearTimeout(timer)
   timer = setTimeout(() => {
     const scollTop = document.documentElement.scrollTop
+    scollTopp.value = scollTop
     if (scollTop >= 500) isShowTabbar.value = true
     if (scollTop <= 500) isShowTabbar.value = false
     // console.log(scollTop)
-  }, 100)
+  }, 10)
 }
 onMounted(() => {
   window.addEventListener('scroll', scollFn)
+  document.documentElement.scrollTo({
+    top: 0,
+  })
 })
 onUnmounted(() => {
   window.removeEventListener('scroll', scollFn)

@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import mitt from 'mitt'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import lazyPlugin from 'vue3-lazy'
 
 import App from './App.vue'
 import router from './router'
@@ -24,5 +25,9 @@ const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
 app.use(router)
+app.use(lazyPlugin, {
+  loading: './assets/img/lazy.png',
+  error: './assets/img/error.png',
+})
 
 app.mount('#app')

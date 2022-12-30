@@ -1,7 +1,16 @@
 <template>
   <div class="app">
-    <router-view></router-view>
-    <tab-bar v-if="!route.meta.hideTabbar"></tab-bar>
+    <!--  -->
+    <router-view v-slot="props">
+      <!-- route里配置name -->
+      <transition>
+        <keep-alive include="home">
+          <component :is="props.Component" />
+        </keep-alive>
+      </transition>
+    </router-view>
+    <!--  -->
+    <tab-bar v-show="!route.meta.hideTabbar"></tab-bar>
     <loading v-if="isLoading" />
   </div>
 </template>

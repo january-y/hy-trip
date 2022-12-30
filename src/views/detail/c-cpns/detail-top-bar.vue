@@ -13,17 +13,33 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
+const props = defineProps<{ scollTop: number | any }>()
 const titleList = ['描述', '设施', '房东', '评论', '须知', '周边']
+const scollPosition = [380 * 1, 380 * 2, 380 * 3, 380 * 4, 380 * 5, 380 * 6]
 const currentIndex = ref<number | undefined>()
 const handleActive = (index: number) => {
   currentIndex.value = index
   document.documentElement.scrollTo({
-    top: index * 370,
+    top: index * 380,
     behavior: 'smooth',
   })
 }
+
+// 顶部导航位置
+watch(
+  () => props.scollTop,
+  () => {
+    for (let i = 0; i < scollPosition.length; i++) {
+      if (scollPosition[i] > props.scollTop) {
+        currentIndex.value = i
+        break
+      }
+      currentIndex.value = 5
+    }
+  },
+)
 </script>
 
 <style lang="less" scoped>

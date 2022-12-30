@@ -1,10 +1,17 @@
 <template>
   <div class="message">
-    <h2>message</h2>
+    <input type="text" v-focus />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const vFocus = {
+  mounted(el: HTMLInputElement) {
+    el?.focus()
+    el.value = 'aaa'
+  },
+}
+</script>
 
 <style lang="less" scoped>
 .message {

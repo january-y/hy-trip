@@ -10,13 +10,13 @@ const useCitysStore = defineStore(
     let hotSuggestsData = ref<any>({})
 
     const getAllCitysAction = () => {
-      getCityAll().then((res) => {
+      getCityAll().then((res: any) => {
         allCitys = res.data.resData.data
       })
     }
 
     const getHotSuggestsAction = () => {
-      getHotSuggests().then((res) => {
+      getHotSuggests().then((res: any) => {
         hotSuggestsData.value = res.data.resData.data
       })
     }

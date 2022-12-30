@@ -1,6 +1,6 @@
 <template>
   <div v-if="contentsData.discoveryContentType === 9" class="box-item">
-    <img :src="contentsData?.data?.image?.url" alt="" />
+    <img :data-url="contentsData?.data?.image?.url" alt="" ref="imgRef" />
     <div class="item-body">
       <div class="top">{{ contentsData?.data?.summaryText }}</div>
       <div class="center">{{ contentsData?.data?.houseName }}</div>
@@ -23,9 +23,20 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
+
 const props = defineProps<{
   contentsData: any
 }>()
+const imgRef = ref<HTMLImageElement>()
+
+onMounted(() => {
+  setTimeout(() => {
+    if (imgRef.value) {
+      imgRef.value.src = imgRef.value.getAttribute('data-url') as string
+    }
+  }, 100)
+})
 </script>
 
 <style lang="less" scoped>
